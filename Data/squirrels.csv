@@ -1,0 +1,35 @@
+date,location,start_time,end_time,temp,conditions,trappers,trap_zone,species,total_wt_g,bag_wt_g,sq_wt_g,sex,age,PIT_tag_num,ear_tag_location,fur_dye,freeze_brand,comments
+9/6/10,SLU campus,14:23,15:30,,"cloudy, cool",whole class,E,SCCA,860,,,M,A,,R,right hip,right hip,slightly scrotal
+9/6/10,SLU campus,14:23,15:30,,"cloudy, cool",whole class,F,SCCA,,,,M,A,,,"right hip, two patches",right back leg,"slightly scrotal, missing tip of tail"
+9/6/10,SLU campus,14:23,15:30,,"cloudy, cool",whole class,B,SCCA,800,,,M,A,,R,center rump,left leg,slightly scrotal
+9/6/10,SLU campus,14:23,15:30,,"cloudy, cool",whole class,B,SCCA,700,,,M,A,,R,left leg,left middle,slightly scrotal
+9/6/10,SLU campus,14:23,15:30,,"cloudy, cool",whole class,B,SCCA,780,,,M,A,,R,left middle,right middle ,slightly scrotal
+9/8/10,,7:30,9:10,65,partly cloudy,"erin, hannah, leah, abbie",C,SCCA,950,,,F,A,,L,back middle,left hip,nipples well developed and large 
+9/8/10,,7:30,9:10,65,partly cloudy,"erin, hannah, leah, abbie",C,SCCA,750,,,F,A,,L,left hip,center rump,nipples not developed 
+9/8/10,,7:30,9:10,65,partly cloudy,"erin, hannah, leah, abbie",C,SCCA,730,,,M,A,,R,left hip,left hip,tiny serotal
+9/8/10,,7:30,9:10,65,partly cloudy,"erin, hannah, leah, abbie",C,SCCA,710,,,M,SA,,,right middle,right shoulder,sub adult
+9/8/10,,7:30,9:10,65,partly cloudy,"erin, hannah, leah, abbie",C,SCCA,780,,,F,,,,,rught hip,escape during freeze brandy
+9/8/10,,7:30,9:10,65,partly cloudy,"erin, hannah, leah, abbie",C,SCCA,790,,,F,A,,L,right hip,right leg,"nipples large , during freeze brand leg twitched then moved up"
+9/10/10,front of JHS,13:30,15:10,70,cloudy,"andrew, janet, eddie, sleaggs, sun, eddie",C,SCCA,800,,,F,A,,L,"center rump, left  middle",right hip,well developed nipples
+9/10/10,front of JHS,13:30,15:10,70,cloudy,"andrew, janet, eddie, sleaggs, sun, eddie",C,SCCA,790,,,M,A,,R,right hip,right leg,"caught earlier,  half tail"
+9/10/10,front of JHS,13:30,15:10,70,cloudy,"andrew, janet, eddie, sleaggs, sun, eddie",C,SCCA,870,,,F,A,,,right leg,center shoulder,well developed nipples
+9/10/10,front of JHS,13:30,15:10,70,cloudy,"andrew, janet, eddie, sleaggs, sun, eddie",C,SCCA,,,,F,A,,L,right leg,right hip,released
+9/10/10,front of JHS,13:30,15:10,70,cloudy,"andrew, janet, eddie, sleaggs, sun, eddie",C,SCCA,710,,,M,A,,R,"left hip, left rump","right hip, left middle",semi scrotal
+9/10/10,front of JHS,13:30,15:10,70,cloudy,"mathias, lizzy, amanda, elb",C,SCCA,750,,,F,A,,L,center shoulder ,"center rump, center middle ",nipple small
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",A9,SCCA,,,,,,,R,,,"recaptured, released "
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",A10,SCCA,760,,,F,,,L,"left leg, right leg",left leg,freeze brand is closer to left hip
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",A11,SCCA,850,,,M,,,R,"center middle, center middle","center rump, right leg","scrotal, tube slip during right leg freeze"
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",L6,SCCA,800,,,M,,,,,right middle ,"slightly scrotal, escaped"
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",F3,SCCA,750,,,F,,,L,"right hip, right shoulder","right leg, right hip",small nipples
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",A11,SCCA,870,,,M,,,R,"left leg, left shoulder","left leg, left hip",very scrotal
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",F5,SCCA,840,,,F,,,R,"left middle, right middle","left hip, center rump",small nipples
+10/1/10,Campus,13:30,16:00,60,cloudy,"mathias, lizzy, amanda, elb",C6,SCCA,790,,,M,,,R,"right leg, right hip","center rump, center middle ",very scrotal
+10/8/10,SLU campus,13:40,,65,"partly cloudy, breezy","jackie, elb, eddie, jessica",C,SCCA,760,,,F,,L14,L,,,recapture
+10/8/10,SLU campus,13:40,,65,"partly cloudy, breezy","jackie, elb, eddie, jessica",C,SCCA,760,,,F,,0,L,left knee,left leg ,recapture
+10/8/10,SLU campus,13:40,,65,"partly cloudy, breezy","jackie, elb, eddie, jessica",E,SCCA,820,,,M,,,R,right middle,"left hind, left hind",bloodied nose a little
+10/8/10,SLU campus,13:40,,65,"partly cloudy, breezy","jackie, elb, eddie, jessica",C,SCCA,740,160,,F,,,,"left leg, left hind","right middle, right left",escaped
+10/8/10,SLU campus,13:40,,65,"partly cloudy, breezy","jackie, elb, eddie, jessica",E,SCCA,760,,,F,,L14,,,,fur dye  without handling
+9/1/11,around JHS,9:00,11:30,"65,75",clear,"leah, kate, eddie, andrew, elb",,SCCA,850,160,690,M,A,,R,,,trap zone is java field
+9/1/11,around JHS,9:00,11:30,"65,75",clear,"leah, kate, eddie, andrew, elb",,SCCA,800,160,690,F,SA,,,,left leg,"tried skin too tough, recap from '10"
+9/1/11,around JHS,9:00,11:30,"65,75",clear,"leah, kate, eddie, andrew, elb",,SCCA,920,160,760,F,A,,L,"center rump, center shoulder","right leg, right hip",escape from ear tag
+,,,,,,,,,,,,,,,,left hip,center rump,"recap from '10, nipples pronouned"
