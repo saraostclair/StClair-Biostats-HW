@@ -2,24 +2,83 @@
 title: "Homework 15"
 format: html
 ---
-
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Setting Things Up
 
 ```{r}
-1 + 1
+rm(list = ls())
+library(here)
+library(tidyverse)
 ```
-
-You can add options to executable code like this 
 
 ```{r}
-#| echo: false
-2 * 2
+compensation_df<- read.csv(here("Data", "compensation.csv"))
+compensation_df
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Intro to summary()
+```{r}
+glimpse(compensation_df)
+summary(compensation_df)
+```
+
+## Intro to dyplr
+
+### Select()
+```{r}
+select(compensation_df, Fruit) #select a specific column
+select(compensation_df, -Root) #select all but a specific column
+```
+
+### Slice()
+```{r}
+slice(compensation_df, 2) #grabs a specific row
+slice(compensation_df, 2:10) #grabs a bunch or rows in a row
+
+slice(compensation_df, c(2,3,10)) #grabs specific rows
+```
+
+### Filter()
+```{r}
+with(compensation_df, Fruit>80) #tells if this is true or false for each data point
+filter(compensation_df, Fruit >80) #outputs the data this is true for
+lo_hi_fruit<- filter(compensation_df, Fruit >80 | Fruit <20) #outputs data from multiple conditions this is true for and assign to an object
+lo_hi_friut
+```
+
+```{r}
+head(compensation_df)
+```
+
+### Mutate()
+```{r}
+compensation_df <- mutate(compensation_df, logFruit = log(Fruit))
+#new variable that is the log of Fruit
+head(compensation_df)
+```
+
+### Arrange()
+```{r}
+arrange(compensation_df, Fruit)
+```
+
+### using multiple functions
+```{r}
+# if you want fruit production>80 and the rootstock widths only
+select(filter(compensation_df, Fruit >80), Root)
+```
+
+### Piping
+```{r}
+compensation_df |> filter(Fruit >80) |>
+  select(Root)
+```
+
+### Calculating Summary Statisitcs
+```{r}
+mean.fruit<- summarise(group_by(compensation_df, Grazing), meanFruit = mean(Fruit))
+# with piping
+compensation_df |> group_by(Grazing)|>
+  summarise(meanFruit = mean(Fruit), sdFruit = sd(Fruit))
+```
+
+
