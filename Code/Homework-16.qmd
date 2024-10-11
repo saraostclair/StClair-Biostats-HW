@@ -3,23 +3,59 @@ title: "Homework-16"
 format: html
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
+rm(list = ls())
+library(here)
+library(tidyverse)
 ```
 
-You can add options to executable code like this 
-
 ```{r}
-#| echo: false
-2 * 2
+cover <- read.csv(here("Data", "donnerville_percent_cover.csv"))
+
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## examine dataset
+```{r}
+#look at data
+glimpse(cover)
+summary(cover)
+```
+
+## rename column names
+```{r}
+cover<- cover|> rename(Cover.type= cover_type) #renamed cover_type to match other two word names'
+cover
+```
+
+## Make Site, Plot type and cover_type into factor variables
+```{r}
+cover$Site <- as.factor(cover$Site)
+
+cover$Plot.type <- as.factor(cover$Plot.type)
+
+cover$Cover.type <- as.factor(cover$Cover.type)
+
+```
+
+## Make Date into a date variable
+```{r}
+cover$Date <- as.Date(cover$Date, format = "%d-%b-%y")
+
+glimpse(cover)
+```
+
+
+## Determine the average percent cover by cover type (bare, bryophytes, vascular plants) for Donnerville 1.
+```{r}
+cover|> filter(Site == "Donnerville 1") |>
+  group_by(Cover.type) |>
+  summarise(average_percent_cover= mean(Percent) )
+```
+
+
+## Determine the average percent vascular plant cover across all sites.
+```{r}
+cover|> filter(Cover.type == "Vascular") |>
+  summarise(average_percent_vascular = mean(Percent))
+```
+

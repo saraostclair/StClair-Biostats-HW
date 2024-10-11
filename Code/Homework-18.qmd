@@ -1,0 +1,55 @@
+---
+title: "Homework-18"
+format: html
+---
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+```
+
+```{r}
+compensation<- read.csv(here("Data", "compensation.csv"))
+glimpse(compensation)
+```
+
+## makes a scatterplot and teel what kind of plot to make along with different asethetics and names for the axis 
+```{r}
+ggplot(compensation, aes(x=Root, y=Fruit, colour = Grazing)) +
+  geom_point(size=5)+
+  xlab("Root Biomass")+
+  ylab("Fruit Production")+
+  theme_bw()
+```
+
+```{r}
+ggplot(compensation, aes(x=Root, y=Fruit, shape = Grazing)) +
+  geom_point(size=5)+
+  xlab("Root Biomass")+
+  ylab("Fruit Production")+
+  theme_bw()
+```
+
+## box and whisker plots with different asethetics 
+```{r}
+ggplot(compensation, aes(x=Grazing, y=Fruit))+
+  geom_boxplot(size = 4, colour = "lightgrey", alpha = 0.5) +
+  xlab("Grazing treatment") +
+  ylab("Fruit Production") +
+  theme_bw()
+```
+
+
+## histogram adjusting asethetics and facet_wrap() to separate by treatment and save as a png.
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(bins=10)
+
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(bins=15) +
+  facet_wrap(~Grazing)
+ggsave("ThatCoolHistogramOfFruit.png")
+
+```
+
