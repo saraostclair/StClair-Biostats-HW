@@ -1,0 +1,21 @@
+---
+title: "Homework feedback"
+format: html
+editor: visual
+---
+
+## Homework 15, 16, 18 feedback
+
+### Homework 15
+
+Looks great. My main suggestion would be that you actually do more to write about what/why you are doing things outside of code chunks. For example, at line 52 you have `### Mutate()` which will make a nice header for mutate, but it doesn't really tell you anything about what the mutate function does (creates new variables). So try to beef up the commentary outside of code chunks.
+
+### Homework 16
+
+Looks good. Remember the `lubridate` package where you could have done at line 42 `cover$Date <- mdy(cover$Date)` which is a bit easier, in my opinion. Lubridate loads when you run `library(tidyverse)`
+
+Clever to rename Cover_type to Cover.type, but recall what we just discussed in class where `_` is better than `.` in column names.
+
+### Homework 18
+
+Looks good. Just my same comment that you should do more to provide commentary outside of code chunks beyond just very wordy headers (e.g. line 44)
