@@ -1,0 +1,153 @@
+---
+title: "Homework-21"
+format: html
+---
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+```
+
+```{r}
+ladybird<- read.csv(here("Data", "ladybirds_morph_colour.csv"))
+ozone<- read.csv(here("Data","ozone.csv"))
+```
+
+```{r}
+#change to factor
+glimpse(ladybird)
+ladybird$Habitat<- as.factor(ladybird$Habitat)
+ladybird$Site<- as.factor(ladybird$Site)
+ladybird$morph_colour<- as.factor(ladybird$morph_colour)
+```
+
+```{r}
+#to make graph
+totals<- ladybird |>
+  group_by(Habitat, morph_colour) |>
+  summarise(total.number = sum(number))
+```
+
+```{r}
+ggplot(totals, aes(x=Habitat, y=total.number, fill = morph_colour))+
+  geom_bar(stat = 'identity', position = 'dodge')
+#stat to do no other math and position to not stack bars
+```
+
+```{r}
+ggplot(totals, aes(x=Habitat, y=total.number, fill=morph_colour)) +
+   geom_bar(stat = 'identity', position = 'dodge')+
+  scale_fill_manual(values = c(black = 'black', red = 'red'))
+#to add colors
+```
+
+Chi square test
+-transform data frame into needed matrix
+```{r}
+lady.mat<-xtabs(number ~ Habitat + morph_colour, data = ladybird)
+#to make fit the 3 coloumn data frame needed
+lady.chi<- chisq.test(lady.mat)
+names(lady.chi)
+lady.chi$expected
+```
+
+OZONE
+
+```{r}
+#turn varibles to facotr
+glimpse(ozone)
+ozone$Garden.location<- as.factor(ozone$Garden.location)
+ozone$Garden.ID<- as.factor(ozone$Garden.ID)
+```
+
+```{r}
+#make separate plots by garden location
+ggplot(ozone, aes(x=Ozone)) +
+  geom_histogram(binwidth = 10)+
+  facet_wrap(~Garden.location, ncol = 1)+
+  theme_bw()
+```
+
+t.test
+```{r}
+#t.test whether two populations are statistically different
+t.test(Ozone ~ Garden.location, data = ozone)
+#var.test to determine whether three or more populations are statistically different from each other
+var.test(Ozone ~ Garden.location, data = ozone)
+```
+
+```{r}
+plant_gr<-read.csv(here("Data", "plant.growth.rate.csv"))
+glimpse(plant_gr)
+```
+
+```{r}
+#scatterplot
+ggplot(plant_gr, aes(x=soil.moisture.content, y=plant.growth.rate))+
+  geom_point()+
+  ylab("Plant Growth Rate (mm/Week)")+
+  theme_bw()
+```
+
+linear regression
+```{r}
+#lm() to fit the model
+model_pgr<- lm(plant.growth.rate ~ soil.moisture.content, data = plant_gr)
+```
+
+```{r}
+#autoplot checks the assumptions of the linear model
+library(ggfortify)
+autoplot(model_pgr, smooth.colour = NA)
+#top left tells us if a line is appropriate to fit to the data
+#top evaluates the normally of the residuals
+#bottom left evaluates the assumption of equal variance
+#bottom right evaluates leverage
+#NA represses line
+```
+
+```{r}
+#anova() does not perform an ANOVA it produces a classic table in statistics 
+anova(model_pgr)
+summary(model_pgr)
+#summary() provides estimates in a linear regression
+```
+
+```{r}
+ggplot(plant_gr, aes(x=soil.moisture.content, y=plant.growth.rate))+
+  geom_point()+
+  geom_smooth(method = 'lm')
+  ylab("Plant Growth Rate (mm/Week)")+
+  theme_bw()
+  # geom_smooth() adds lm line
+```
+
+ANOVA analysis
+```{r}
+daphnia<- read.csv(here("Data", "Daphniagrowth.csv"))
+glimpse(daphnia)
+```
+
+```{r}
+ggplot(daphnia, aes(x=parasite, y=growth.rate))+
+  geom_boxplot()+
+  theme_bw()+
+  coord_flip()
+```
+
+```{r}
+#make model
+model_grow<- lm(growth.rate ~parasite, data=daphnia)
+#check assumptions
+autoplot(model_grow, smooth.colour = NA)
+#make an inference from one way anova
+anova(model_grow)
+summary(model_grow)
+#get mean growth rates
+sumDat<- daphnia |>
+  group_by(parasite) |>
+  summarise(meanGR = mean(growth.rate))
+```
+
+instal

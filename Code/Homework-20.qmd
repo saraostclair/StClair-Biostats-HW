@@ -30,7 +30,7 @@ ggplot(soil, aes(SOM_percent))+
 ```
 
 How would you describe the mean_SOM data based on viewing the histogram? Write your answer below:
-- I would say the mean is at about 7 based on the distribution of the histogram. 
+- I would say the mean is at about 7 based on the distribution of the histogram and it is slighlty skewed to the right. 
 
 4.  Create a new dataframe called SOM by calculating for each forest the mean soil organic matter and the standard deviation of soil organic matter. Make sure to name variables you create "mean_SOM" and "sd_SOM" so that the next code chunk I give you works.
 
@@ -38,6 +38,13 @@ How would you describe the mean_SOM data based on viewing the histogram? Write y
 SOM<- soil |> group_by(Forest) |>
   summarise(mean_SOM = mean(SOM_percent),
             sd_SOM= sd(SOM_percent))
+```
+
+
+```{r}
+Nit<- soil |> group_by(Forest) |>
+  summarise(mean_n= mean(Nitrate_N_ppm, na.rm = TRUE),
+            sd_n = sd(Nitrate_N_ppm, na.rm=TRUE))
 ```
 
 5.  Now run the following code chunk which will create a bar plot of mean soil organic matter per forest, with standard deviation as error bars.
@@ -73,6 +80,9 @@ Degrasse has the lowest SOM overall and a narrow range of data points.
 Donnerville has a higher median and larger range of data points than Degrasse.
 Kip Tract has the highest median and the largest range of points with many outliers.
 South Hammond has a lower median than Donnerville but larger than Degrasse and has about the same range as Donnerville.
+
 -   What do you notice that is different from how the data were displayed in the bar plot?
-- 
+- The bar plot illustrated the mean SOM and SD, whereas, the box plot illustrated the median, range, quartiles, and outliers Overall, the box plot gave a more detailed overview of the data.
+
 -   Which plot type is more informative? Explain your answer.
+- The boxplot is more informative because the bar plot only presented the mean and SD of SOM. In contrast, the boxplot displayed the interquartile range (IQR), median, quartiles, and outliers. It also demonstrated the spread and symmetry of the data, helping us understand the underlying distribution, which is important for determining the appropriate statistical tests to use.
