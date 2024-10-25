@@ -1,0 +1,67 @@
+---
+title: "Homework 22 - Chi-square test review"
+format: html
+editor: visual
+---
+
+Today's homework asks you to think a little more deeply about how to conduct a chi-square test of association (also called a contingency analysis or contingency table).
+
+I am providing real data from a paper that examined the effectiveness of covid vaccination status ("Fully vaccinated" and "Not vaccinated") on the frequency (i.e. count) survival vs. death ("Lived" vs. "Died") from covid in patients coming to the emergency room of a Turkish hospital.
+
+Start by setting things up
+
+```{r}
+
+```
+
+Now read in the data file called `covid_vaccines.csv`. Make sure that this data file is located in the data folder of your Biostats-HW project! Assign the data to an object.
+
+```{r}
+
+```
+
+There are two variables in the data set that should be assigned as factor variables. Do that now.
+
+```{r}
+
+```
+
+## Examine and plot the data
+Now view the data set. What do you notice about it? Are there any obvious count data already created? Explain:
+
+Write your answer here.
+
+
+
+
+
+Now you need to write some code to obtain the actual counts and save them in a new object called `covid_counts`. You will use the familiar `group_by` and `summarise`. However, you need to try a new trick to get counts when your dataset has no actual numbers in it. I'm going to suggest that within your `summarise` statement you create a new variable called `count`. And I'm going to ask you to see if you can figure out how to use a function called `length` to obtain count data. You may need to use the help in RStudio or google to figure out how to do this step.
+
+```{r}
+
+```
+
+Now make a bar plot that shows the count data using the `covid_counts` dataframe you just created. Put survival on the x-axis and fill the bars based on vaccination status. Color vaccinated patients in dark green and unvaccinated patients in black. Remove the gray background.
+
+```{r}
+
+```
+
+## Conduct the Chi-square test
+Now use the information from Chapter 5 and Homework 21 to conduct a Chi-square test of association. Your "null hypothesis" is that there is no association between whether a patient has had a covid vaccine and their survival in the emergency room.
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+## Interpret the results
+Now write a statement or two that interprets the results of your analysis.
+
