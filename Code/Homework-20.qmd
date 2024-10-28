@@ -29,8 +29,7 @@ ggplot(soil, aes(SOM_percent))+
   geom_histogram()
 ```
 
-How would you describe the mean_SOM data based on viewing the histogram? Write your answer below:
-- I would say the mean is at about 7 based on the distribution of the histogram and it is slighlty skewed to the right. 
+How would you describe the mean_SOM data based on viewing the histogram? Write your answer below: - I would say the mean is at about 7 based on the distribution of the histogram and it is slighlty skewed to the right.
 
 4.  Create a new dataframe called SOM by calculating for each forest the mean soil organic matter and the standard deviation of soil organic matter. Make sure to name variables you create "mean_SOM" and "sd_SOM" so that the next code chunk I give you works.
 
@@ -39,7 +38,6 @@ SOM<- soil |> group_by(Forest) |>
   summarise(mean_SOM = mean(SOM_percent),
             sd_SOM= sd(SOM_percent))
 ```
-
 
 ```{r}
 Nit<- soil |> group_by(Forest) |>
@@ -57,12 +55,7 @@ ggplot(SOM, aes(Forest, mean_SOM))+
   xlab("Forest name")
 ```
 
-Based on what you see in the bar chart, how would you describe the pattern of SOM between the 4 different forests? Write your answer here: 
-Degrasse has the lowest mean and smallest SD as indicated by the error bars.
-Donnerville indicates a higher mean than Degrasse but also has larger error bars.
-Kip Tract has the highest mean and also the most variability.
-South Hammond has a smaller mean than Kip Tract and Donnerville but larger than Degrasse and smaller SD then the two larger means but larger than Degrasse. 
-
+Based on what you see in the bar chart, how would you describe the pattern of SOM between the 4 different forests? Write your answer here: Degrasse has the lowest mean and smallest SD as indicated by the error bars. Donnerville indicates a higher mean than Degrasse but also has larger error bars. Kip Tract has the highest mean and also the most variability. South Hammond has a smaller mean than Kip Tract and Donnerville but larger than Degrasse and smaller SD then the two larger means but larger than Degrasse.
 
 Now create a boxplot of the SOM_percent data. Use Forest as the x-axis variable and overlay the point data on top of the boxplot. Make the points blue and somewhat transparent. Call the x-axis "Forest name" and the y-axis "Percent soil organic matter" (hint: See homework 18...).
 
@@ -75,14 +68,12 @@ ggplot(soil, aes(x=Forest, y=SOM_percent))+
 
 Based on what you see in the box plot, write out your answers the following questions:
 
--   how would you describe the pattern of SOM between the 4 different forests?
-Degrasse has the lowest SOM overall and a narrow range of data points.
-Donnerville has a higher median and larger range of data points than Degrasse.
-Kip Tract has the highest median and the largest range of points with many outliers.
-South Hammond has a lower median than Donnerville but larger than Degrasse and has about the same range as Donnerville.
+-   how would you describe the pattern of SOM between the 4 different forests? Degrasse has the lowest SOM overall and a narrow range of data points. Donnerville has a higher median and larger range of data points than Degrasse. Kip Tract has the highest median and the largest range of points with many outliers. South Hammond has a lower median than Donnerville but larger than Degrasse and has about the same range as Donnerville.
 
 -   What do you notice that is different from how the data were displayed in the bar plot?
-- The bar plot illustrated the mean SOM and SD, whereas, the box plot illustrated the median, range, quartiles, and outliers Overall, the box plot gave a more detailed overview of the data.
+
+-   The bar plot illustrated the mean SOM and SD, whereas, the box plot illustrated the median, range, quartiles, and outliers Overall, the box plot gave a more detailed overview of the data.
 
 -   Which plot type is more informative? Explain your answer.
-- The boxplot is more informative because the bar plot only presented the mean and SD of SOM. In contrast, the boxplot displayed the interquartile range (IQR), median, quartiles, and outliers. It also demonstrated the spread and symmetry of the data, helping us understand the underlying distribution, which is important for determining the appropriate statistical tests to use.
+
+-   The boxplot is more informative because the bar plot only presented the mean and SD of SOM. In contrast, the boxplot displayed the interquartile range (IQR), median, quartiles, and outliers. It also demonstrated the spread and symmetry of the data, helping us understand the underlying distribution, which is important for determining the appropriate statistical tests to use.

@@ -1,0 +1,67 @@
+---
+title: "Homework_23"
+format: html
+---
+
+```{r}
+rm(list=ls())
+library(here)
+library(tidyverse)
+library(ggfortify)
+plant_gr<- read.csv(here("Data", "plant.growth.rate.csv"))
+```
+
+Linear Models
+Plot-> Model -> Check assumptions -> Interpret -> Plot Again
+
+## Simple Linear Regression
+- need a clear relationship between two variables that is easily visualized by plotting the dependent against the independent variable 
+- explanatory variable is continuous, numeric variables and does not have categories 
+
+```{r}
+glimpse(plant_gr)
+```
+
+```{r}
+#visualize data
+ggplot(plant_gr,
+       aes(x = soil.moisture.content, y = plant.growth.rate))+
+  geom_point()+
+  ylab("Plant Growth Rate (mm/week")+
+  theme_bw()
+```
+
+## making a Simple Linear Regression Happen
+```{r}
+model_pgr <- lm(plant.growth.rate ~ soil.moisture.content,
+                data = plant_gr)
+```
+
+```{r}
+#diagnostic plots
+autoplot(model_pgr, smooth.colour = NA)
+#top left whether a line is appropriate to fit the data
+#top right assumption of normality of residuals 
+#bottom left assumption of equal variance 
+#bottom right evaluates leverage to detect influential data points
+```
+
+## Now the Interpretation 
+```{r}
+anova(model_pgr)
+#large F-value is large which indicated a small relative variance attributed to the explanatory variable 
+summary(model_pgr)
+#estimates in a linear regression
+```
+
+## ggplot2: the capacity to add regression lines 
+```{r}
+ggplot(plant_gr, aes(x = soil.moisture.content, y= plant.growth.rate))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  ylab("Plant Growth Rate (mm/week)")+
+  theme_bw()
+#shove a linear model fitted line and the standard error of the fit using flash transparent
+
+```
+
