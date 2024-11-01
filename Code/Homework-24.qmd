@@ -37,6 +37,7 @@ crabs$Sex<- as.factor(crabs$Sex)
 Is there a relationship between height and weight in female crabs?
 
 1.  Extract the data for just female crabs.
+
 ```{r}
 crabs_f<- crabs |> filter(Sex == "F") |>
   filter(Height<2 ) |>
@@ -44,10 +45,9 @@ crabs_f<- crabs |> filter(Sex == "F") |>
 crabs_f
 ```
 
-
 2.  Examine the response and predictor variables and use the flow chart from class to decide the appropriate statistical analysis (choose from: chi-square, 2-sample t-test or linear regression). Explain your answer here:
-- Predictor Weight is numeric and continuous and height the response is also numeric and continuous. The data is ration or interval and is continuous and there is a relationship between the two and not more than one predictor variable so a linear regression should be run. 
 
+-   Predictor Weight is numeric and continuous and height the response is also numeric and continuous. The data is ration or interval and is continuous and there is a relationship between the two and not more than one predictor variable so a linear regression should be run.
 
 3.  Work through the data analysis **following all of the steps provided in chapter 5 of your book**. You may use class notes or homework keys as a guide.
 
@@ -55,7 +55,6 @@ crabs_f
 ggplot(crabs_f, aes(x=Height, y=Weight))+
   geom_point()
 ```
-
 
 ```{r}
 model_crabs <- lm(Weight ~ Height, data = crabs_f)
@@ -79,6 +78,4 @@ ggplot(crabs_f, aes(x=Weight, y=Height))+
   geom_smooth(method = 'lm')
 ```
 
-
-
-Reject the null hypothesis that there is no association between female crab weight and height. 
+Reject the null hypothesis that there is no association between female crab weight and height.
