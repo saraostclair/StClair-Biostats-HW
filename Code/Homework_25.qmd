@@ -3,23 +3,71 @@ title: "Homework_25"
 format: html
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
+rm(list=ls())
+library(here)
+library(tidyverse)
+library(ggfortify)
 ```
 
-You can add options to executable code like this 
-
 ```{r}
-#| echo: false
-2 * 2
+daphnia<- read.csv(here("Data", "Daphniagrowth.csv"))
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+glimpse(daphnia)
+daphnia$parasite<- as.factor(daphnia$parasite)
+```
+
+```{r}
+#way of looking variation in response variable as a function of a grouping categorical variable
+ggplot(daphnia, aes(x=parasite, y=growth.rate))+
+  geom_boxplot()+
+  theme_bw()+
+  coord_flip()
+#coord_flip makes names easier to read
+#shows sig. variaiton in growth rates across treatments 
+```
+
+```{r}
+#same structure as linear model
+model_grow<- lm(growth.rate ~parasite, data = daphnia)
+```
+
+Checking assumptions with plot
+```{r}
+autoplot(model_grow, smooth.colour = NA)
+```
+
+upper left
+- residuals are fine
+upper right
+- normality is within the expected bounds of variation
+bottom left
+- residuals are good
+bottom right
+- leverages are good
+
+```{r}
+anova(model_grow)
+#large F and small p allows us to reject the null hypothesis
+```
+
+#contrast treatments
+```{r}
+summary(model_grow)
+#shows in alphabetical order
+#control
+#m. bis
+# p. perp
+#p. ramosa
+```
+
+```{r}
+#means for each treatments to contrast ourselves
+sumDat<- daphnia |>
+  group_by(parasite)|>
+  summarise(meanGR = mean(growth.rate))
+sumDat
+```
+
