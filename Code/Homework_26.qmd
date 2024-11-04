@@ -3,23 +3,67 @@ title: "Homework_26"
 format: html
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
+rm(list=ls())
+library(here)
+library(tidyverse)
+library(ggfortify)
+library(multcomp)
 ```
 
-You can add options to executable code like this 
-
 ```{r}
-#| echo: false
-2 * 2
+pea<- read.csv(here("Data", "s_r_pea_sections.csv"))
+glimpse(pea)
+pea$Treatment<- as.factor(pea$Treatment)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+ggplot(pea, aes(x=Treatment, y=pea_section_length_ou))+
+  geom_boxplot()+
+  geom_jitter(width = 0.01)+
+  theme_bw()+
+  coord_flip()
+```
+
+- based on the graphs I think there with be a significant difference between control and all the treatments and the between 2 percent sucrose and the other treatments
+
+```{r}
+ model_pea<- lm(pea_section_length_ou~Treatment, data = pea)
+```
+
+```{r}
+autoplot(model_pea)
+```
+
+- the normality looks okay
+- in the leverage and equal variance there seems to be one group that has much larger variance and leverage
+
+```{r}
+anova(model_pea)
+```
+
+- p-value is significant so there is a difference between at least one of the groups so now I will do a tukey HSD to see between which groups there is a difference
+
+```{r}
+summary(model_pea)
+```
+
+- can see that there is a significant difference between the 1% fructose and sucrose and 2% fructose, 2% sucrose, and control.
+
+```{r}
+pea |>
+  group_by(Treatment)|>
+  summarise(meanGR = mean(pea_section_length_ou))
+#mean pea section length for each treatment
+```
+
+```{r}
+phc1<- glht(model_pea, linfct = mcp(Treatment = "Tukey"))
+summary(phc1)
+```
+
+```{r}
+cld(phc1)
+```
+
+- there is a significant difference between 1% fructose and glucose and 2% sucrose and the control, 2% fructose and 2% sucrose and the control, 2% glucose and 2% sucrose and the control, 2% sucrose and control. 
