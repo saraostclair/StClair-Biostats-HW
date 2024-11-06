@@ -29,6 +29,13 @@ ggplot(daphnia, aes(x=parasite, y=growth.rate))+
 #shows sig. variaiton in growth rates across treatments 
 ```
 
+There appears to be a likely overall parasite effect and an ordering of the effect of parasite type on growth rate such that P. ramosa \< M. bicuspidata \< P. perplexa \< control
+
+We can also estimate the average growth rate for each treatment: - control approx 1.2, P. perplexa c. 1.1, M. bicuspidata c. 0.8 and P. ramosa c. 0.55.
+
+-   we can also figure out the degrees of freedom for the treatment and for error. Sample size minus the number of parameters we are estimating = 4 levels - 1 = 3 for the effect of parasites and 4 means from 40 samples = 36 for the error degrees of freedom.
+
+
 ```{r}
 #same structure as linear model
 model_grow<- lm(growth.rate ~parasite, data = daphnia)
@@ -71,3 +78,17 @@ sumDat<- daphnia |>
 sumDat
 ```
 
+```{r}
+ggplot(daphnia, aes(parasite, growth.rate, color = parasite))+
+     geom_point(size = 3)+
+     geom_point(data = sumDat, aes(parasite, meanGR, fill = parasite), shape = 23, size = 5)+
+     coord_flip()+
+     theme_bw()
+```
+
+
+There is a statistically significant effect of parasite treatment on growth rate of daphnia. (Table 1, F(3,36(d.f)), pvalue<0.05)
+
+f= between/within
+MSE parasite= variance between groups
+MSE residuals = variance within the groups
