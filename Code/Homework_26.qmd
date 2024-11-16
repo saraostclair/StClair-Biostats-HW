@@ -26,6 +26,11 @@ ggplot(pea, aes(x=Treatment, y=pea_section_length_ou))+
 ```
 
 - based on the graphs I think there with be a significant difference between control and all the treatments and the between 2 percent sucrose and the other treatments
+control mean= 72
+2% sucrose = 65
+2% glucose= 60
+2% fructose = 57
+1% fructose 1% glucose = 56
 
 ```{r}
  model_pea<- lm(pea_section_length_ou~Treatment, data = pea)
@@ -42,7 +47,7 @@ autoplot(model_pea)
 anova(model_pea)
 ```
 
-- p-value is significant so there is a difference between at least one of the groups so now I will do a tukey HSD to see between which groups there is a difference
+- p-value is significant so there is a difference between at least one of the groups (Table 1, F(4,45)=49.368, p-value< 0.5) so now I will do a tukey HSD to see between which groups there is a difference
 
 ```{r}
 summary(model_pea)
@@ -67,3 +72,5 @@ cld(phc1)
 ```
 
 - there is a significant difference between 1% fructose and glucose and 2% sucrose and the control, 2% fructose and 2% sucrose and the control, 2% glucose and 2% sucrose and the control, 2% sucrose and control. 
+
+

@@ -1,0 +1,319 @@
+---
+title: "13-Nov-2024-NAs"
+format: html
+editor: visual
+---
+
+## Set up our workspace and read in the data
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(ggfortify)
+library(here)
+```
+
+Read in the data.
+
+```{r}
+df <- read.csv(here("Data/learn-about-NA.csv"))
+str(df)
+```
+
+
+```{r}
+df$Treatment<- as.factor(df$Treatment)
+levels(df$Treatment)
+```
+
+## Dealing with NA's
+
+For your capstone project, you are working with datasets that, most likely, have NA values. How do we deal with them?
+
+### Finding complete cases
+
+In R-speak, a "complete case" is a row of data for which there are NO NA values in ANY of the columns.
+
+Use the `head()` function to show the first 6 rows of `df`. How many complete cases do you see?
+```{r}
+head(df)
+```
+
+**Answer here:**
+- 3 complete cases 
+
+The base R function `complete.cases()` is a function that returns boolean values: TRUE for rows that have complete cases and FALSE for rows that have NA in at least 1 column.
+
+Let's use it:
+
+```{r}
+complete.cases(df)
+```
+
+Now see if you can use `complete.cases()` to check your answer to question 1:
+
+```{r}
+complete.cases(head(df))
+```
+
+### Counting NA Values
+
+Sometimes it would be nice to determine the number of rows with complete cases or the number of NAs in a dataframe or vector.
+
+Because `complete.cases` returns either TRUE or FALSE, we can determine the number of either TRUE or FALSE rows with the `sum()` function. R will add up the number of TRUE values, thus:
+
+```{r}
+sum(complete.cases((df))) #add up the number complete rows in the dataframe
+```
+
+We see that there are 36 rows that have no NA values in any columns.
+
+Use a combination of `sum()`, `complete.cases()` and `head()` to return a numeric validation for the number you answered for question 1 above.
+
+**Write your code here:**
+
+```{r}
+sum(complete.cases(head(df)))
+```
+
+We can also use the base R function `is.na()` to count either the number of NAs or the number of rows with values. Like `complete.cases()`, `is.na()` returns TRUE or FALSE. Take a look.
+
+Let's count the number of rows in the Dried_mass_g column of our dataframe that are NA:
+
+```{r}
+sum(is.na(df$Dried_mass_g))
+```
+
+What if we wanted to know how many rows in the Dried_mass_g column are NOT NA values, i.e. how many rows have a value? We can use the Not operator `!` like this:
+
+```{r}
+sum(!is.na(df$Dried_mass_g))
+```
+
+Use the same method to determine the number of rows with NAs in the Growth_rate_mm column and the number of rows without NAs in that column:
+
+```{r}
+sum(is.na(df$Growth_rate_mm))
+
+sum(!is.na(df$Growth_rate_mm))
+```
+
+### Removing NAs
+
+We have several options for removing cases (i.e. **rows**) with NA values, from both base R and from the tidyverse. Let's look at some base R options first because they are very common and then look at some options from the tidyverse.
+
+Regardless of method, we can either: - remove all rows with NA in **any** column - remove all rows with NA in **a specific** column
+
+Which option we choose can have a big impact on our analysis, as we will see below.
+
+#### Base R Options
+
+We can use `complete.cases()`, `na.omit()` or `is.na()` in our approach:
+
+Use `complete.cases()` to remove all rows that contain NA values in ANY column:
+
+```{r}
+df_remove_All <- df[complete.cases(df), ] 
+#remember how indexing works: [rows, columns]. Thus, this code says to make a new 
+#object called df_remove_All by going to df and grabbing [the rows with complete cases, #]. Leaving just a space after the comma tells R to return all columns of the data #frame.
+
+View(df_remove_All)
+```
+
+If, instead, we wanted to return a dataframe in which there were no rows with NA values in the Growth_rate_mm column, we could write some fairly complicated indexing like this:
+
+```{r}
+df_remove_NA_growth <- df[complete.cases(df[,3]), ] #go into df and grab the rows in which there are complete cases in the 3rd column and keep all the column of data that match
+
+View(df_remove_NA_growth)
+```
+
+See if you can use the same approach to write the code that would return a dataframe in which there are no rows with NA values in the Dried_mass_g column but that returns all columns of the dataframe. Call the object df_remove_NA_Mass
+
+**Write your code here:**
+
+
+```{r}
+df_remove_NA_Mass <- df[complete.cases(df[,2]), ]
+
+View(df_remove_NA_Mass)
+```
+
+Another base R for getting rid of rows with NA values is `na.omit()`. Let's take a look.
+
+Use `na.omit()` on df and see what result you get. Save the object as df1.
+
+```{r}
+df1 <- na.omit(df)
+View(df1)
+```
+
+#### Tidyverse methods for removing NAs
+
+Let's get rid of a few of the objects we made to start over with a somewhat clean slate:
+
+```{r}
+rm(df1, df_remove_All, df_remove_NA_Mass, df_remove_NA_growth)
+```
+
+There is a function in the `tidyr` package called `drop_na()` that we can use to get rid of either rows with ANY NA values or rows with NA values in specific columns.
+
+First, let's get rid of rows with NA values in any column:
+
+```{r}
+df1 <- df |> drop_na()
+
+View(df1)
+```
+
+Now let's get rid of rows with NA values in the Dried_mass_g column:
+
+```{r}
+df_remove_NA_Mass <- df |> drop_na(Dried_mass_g)
+```
+
+Now you write some code to use `drop_na()` to create a new data frame called `df_remove_NA_growth` that has no NA values in the Growth_rate_mm column:
+
+```{r}
+df_remove_NA_growth <- df |> drop_na(Growth_rate_mm)
+```
+
+## Why should we care?
+
+Deciding how to treat NA values in your data can have critical impacts on your data analysis.
+
+Let's look at an example. Let's clean up our workspace so that we have two data frames, our original called df_All_NA, including all of the NA data, and a new data set called df_No_NA that is just the complete cases of df.
+
+```{r}
+rm(df_remove_NA_growth, df_remove_NA_Mass)
+
+df_All_NA <- df
+df_No_NA <- df1
+
+rm(df, df1)
+```
+
+What if we wanted to test the hypothesis that there is no effect of fertilizer treatment on plant growth rate?
+
+Our predictor variable type is: treatment: categorical
+
+Our response variable type is: plant growth rate: continuous 
+
+Therefore our statistical method is: ANOVA
+
+We will do our analysis TWICE, once with all of the data (no NA's removed) and a second time with just the complete cases, to see if there is a difference, and, if so, which approach is better.
+
+### First attempt: All the data
+
+#### Plot and Guess
+
+```{r}
+ggplot(df_All_NA, aes(Treatment, Growth_rate_mm))+
+  geom_boxplot()+
+  geom_point()+
+  theme_bw()
+```
+
+What do you think?
+there seem to be outliers for each treatment level which could be effecting the mean growth rate. There might be a significant p-value for control and level 2 but not between control and level 1 
+
+#### Create a model:
+
+```{r}
+grow.mod<-lm(Growth_rate_mm ~ Treatment, data = df_All_NA)
+```
+
+#### Check our assumptions:
+
+```{r}
+autoplot(grow.mod)
+```
+
+Looks pretty good.
+
+#### Interpret results:
+
+```{r}
+anova(grow.mod)
+```
+
+Practice your interpretation.
+
+Why are there 2 DF for the Treatment effect?
+three treatments minus one so 2 DF.
+
+Why are there 46 DF for the Residuals?
+11 rows were removed 
+46+ 11 NA + 3 treatments 
+
+How would you write a results statement?
+F(2,46)= 3.6937
+
+```{r}
+summary(grow.mod)
+```
+
+Practice your interpretation:
+
+Does adding 1 dose of fertilizer change the growth rate significantly from the Control?
+- it does not as Pvalue= 0.0812 it does not indicate significance. 
+
+Does adding 2 doses of fertilizer change the growth rate signficantly from the Control?
+- yes the p-value= 0.0108 so it indicates significance.
+
+We won't worry about re-plotting our data right now.
+
+Now let's do it all again, with the complete cases.
+
+### Second Attempt: Complete Cases
+
+#### Plot and Guess
+
+```{r}
+ggplot(df_No_NA, aes(Treatment, Growth_rate_mm))+
+  geom_boxplot()+
+  geom_point()+
+  theme_bw()
+```
+
+What do you think?
+
+#### Create a model:
+
+```{r}
+grow.mod.no.NA <-lm(Growth_rate_mm ~ Treatment, data = df_No_NA)
+```
+
+#### Check our assumptions:
+
+```{r}
+autoplot(grow.mod.no.NA)
+```
+
+Fit doesn't look as good. Data appear less normally distributed.
+
+#### Interpret results:
+
+```{r}
+anova(grow.mod.no.NA)
+```
+
+Practice your interpretation.
+
+Why are there 2 DF for the Treatment effect?
+
+Why are there 33 DF for the Residuals?
+
+How would you write a results statement?
+
+```{r}
+summary(grow.mod.no.NA)
+```
+
+Practice your interpretation:
+
+Does adding 1 dose of fertilizer change the growth rate significantly from the Control?
+
+Does adding 2 doses of fertilizer change the growth rate signficantly from the Control?
+
+We won't worry about re-plotting our data right now.
