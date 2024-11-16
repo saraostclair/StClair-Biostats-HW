@@ -28,6 +28,8 @@ Read in the data.
 ```{r}
 df <- read.csv(here("Data/learn-about-NA.csv"))
 str(df)
+df$Treatment<- as.factor(df$Treatment)
+#make treatment a factor
 ```
 
 ## Dealing with NAs in data analysis
@@ -45,7 +47,7 @@ df_All_NA <- df
 Now use one of the methods we discussed in class on 13 November to create a second dataframe called `df_No_NA` that is just the complete cases of df.
 
 ```{r}
-df_No_NA <- 
+df_No_NA <-  df[complete.cases(df), ] 
 ```
 
 What if we wanted to test the hypothesis that there is no effect of fertilizer treatment on plant growth rate?
@@ -108,8 +110,10 @@ summary(grow.mod)
 Practice your interpretation:
 
 Does adding 1 dose of fertilizer change the growth rate significantly from the Control?
+- Adding 1 dose of fertilizer increases the growth rate by 2.4805 mm compared to the Control, with a p-value of 0.0812, which is not statistically significant.
 
 Does adding 2 doses of fertilizer change the growth rate significantly from the Control?
+- Adding 2 doses of fertilizer increases the growth rate by 3.6993 mm compared to the Control, with a p-value of 0.0108, which is statistically significant
 
 We won't worry about re-plotting our data right now.
 
@@ -120,48 +124,60 @@ Your turn. Run the 1-way ANOVA again, this time with only the dataset that has c
 #### Plot and Guess
 
 ```{r}
-
+ggplot(df_No_NA, aes(Treatment, Growth_rate_mm))+
+  geom_boxplot()+
+  geom_point()+
+  theme_bw()
 ```
 
 What do you think?
 
+There is likely an effect of treatment on growth rate however, we are uncertain whether both levels of the fertilizer treatment will differ significantly from the control. While the treatments may vary from the control, they are unlikely to differ significantly from each other.
+
 #### Create a model:
 
 ```{r}
-grow.mod.no.NA <-
+grow.mod.no.NA <-lm(Growth_rate_mm ~ Treatment, data = df_No_NA)
 ```
 
 #### Check our assumptions:
 
 ```{r}
-
+autoplot(grow.mod.no.NA)
 ```
 
+Data set looks a little less normal and the fitted values look a little skewed but overall is fine. 
+
 What do you think? Same or different from our first 1-way ANOVA?
+- different 
 
 #### Interpret results:
 
 ```{r}
-
+anova(grow.mod.no.NA)
 ```
 
-Practice your interpretation.
-
+Why are there 46 DF for the Residuals? Remember that we determined that there were 49 values in the `Growth_rate_mm` variable using `sum(!is.na(variable))` like this:
 Why are there 2 DF for the Treatment effect?
+- Because there are 3 levels of our Treatment variable: Control, Level 1, and Level 2. Number of groups - 1 = degrees of freedom therefore 3 - 1 = 2.
 
 Why are there 33 DF for the Residuals?
+- There are 36 observations in the data set so 36 - 3 treatments = 33
 
 How would you write a results statement?
+- An ANOVA was conducted to assess the effect of treatment on growth rate (F(2,33)=2.79, p=0.076). The effect of treatment did not reach the threshold of significance p< 0.05 suggesting that there is no strong evidence that the treatment significantly affects growth rate.
 
 ```{r}
-
+summary(grow.mod.no.NA)
 ```
 
 Practice your interpretation:
 
 Does adding 1 dose of fertilizer change the growth rate significantly from the Control?
+- No, adding 1 dose of fertilizer results in an estimated increase in growth rate of 2.518 mm; however, this change is not statistically significant (p=0.1139).
 
 Does adding 2 doses of fertilizer change the growth rate signficantly from the Control?
+-Yes, adding 2 doses of fertilizer results in an estimated increase in growth rate of 3.560 mm, which is statistically significant (p=0.0325).
 
 We won't worry about re-plotting our data right now.
 
@@ -176,69 +192,93 @@ You know what to do here. Go for it.
 #### Plot and guess
 
 ```{r}
-
+ggplot(df_All_NA, aes(x=Growth_rate_mm, y = Dried_mass_g))+
+  geom_point()
 ```
 
+there seems to be a positive association between growth rate and dried mass. 
+dried mass: 31-54
+growth rate: 5 - 23
+slope: 1.28
+i guess the y intercept is at about 20
 #### Create model
 
 ```{r}
-
+NA.mod <- lm(Dried_mass_g~Growth_rate_mm, data = df_All_NA)
 ```
 
 #### Check assumptions
 
 ```{r}
-
+autoplot(NA.mod)
 ```
 
 Don't worry if assumptions don't look perfect - focus on normality of the data.
+Data follows the normal distribution so it looks good. 
 
 #### Interpret model
 
 Use `anova()` first before using `summary()`
 
 ```{r}
-
+anova(NA.mod)
 ```
 
 Why is there 1 degree of freedom for Growth_rate_mm and why are there 34 degrees of freedom for the Residuals?
+There is 1 degree of freedom for Growth_rate_mm because there is one predictor. 24 observations were excluded due to missing values and 1 removed for the predictor and one for intercept.
 
 ```{r}
-
+summary(NA.mod)
 ```
+The linear regression model revealed a significant positive relationship between Growth_rate_mm and Dried_mass_g (F(1,34)=10.81, p=0.0024). The adjusted $R^2$ value of 0.2188 indicates that approximately 21.9% of the variance in dried mass is explained by growth rate. This result suggests that growth rate is a significant predictor of dried mass in the dataset.
 
 ### Second attempt: Limited data set with only complete cases (use `df_No_NA`)
 
 #### Plot and guess
 
 ```{r}
-
+ggplot(df_No_NA, aes(x=Growth_rate_mm, y = Dried_mass_g))+
+  geom_point()
 ```
-
+there seems to be a positive association between growth rate and dried mass. 
+dried mass: 31-54
+growth rate: 5 - 23
+slope: 1.28
+i guess the y intercept is at about 20
 #### Create model
 
 ```{r}
-
+with.NA.mod <- lm(Dried_mass_g~Growth_rate_mm, data = df_All_NA)
 ```
 
 #### Check assumptions
 
 ```{r}
-
+autoplot(with.NA.mod)
 ```
 
 Again, don't worry if the assumptions aren't perfect. How do they compare to the first analysis?
+
+They look pretty much the same as the initial model and data follows the normal distribution so it looks good. 
+
 
 #### Interpret model
 
 Use `anova()` first then `summary()`.
 
 ```{r}
-
+anova(with.NA.mod)
+summary(with.NA.mod)
 ```
 
+The linear regression model revealed a significant positive relationship between Growth_rate_mm and Dried_mass_g (F(1,34)=10.81, p=0.0024). The adjusted $R^2$ value of 0.2188 indicates that approximately 21.9% of the variance in dried mass is explained by growth rate. This result suggests that growth rate is a significant predictor of dried mass in the dataset.
 Answer the following questions:
 
 1.  How many degrees of freedom are there for Growth_rate_mm? Why?
+-There is 1 degree of freedom for Growth_rate_mm because the model includes a single predictor variable.
+
 2.  How many degrees of freedom are there for Residuals? Why?
+- There are 34 degrees of freedom for the residuals. This is calculated as the total number of complete observations minus the number of parameters estimated (one slope for Growth_rate_mm and one intercept). 
+
 3.  How are the degrees of freedom in this second model different than the first? What does the answer tell you about the role of NA values in the regression analysis?
+- The degrees of freedom are the same in both models, showing that they used the same 36 complete cases. This highlights how NA values reduced the dataset and sample size.
